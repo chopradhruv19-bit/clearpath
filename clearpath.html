@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ClearPath — Understand Your Housing Letter</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fraunces:ital,wght@0,700;1,700&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F7F6F2;
+    --surface: #FFFFFF;
+    --ink: #1A1A18;
+    --ink-muted: #6B6B67;
+    --ink-faint: #A8A8A4;
+    --accent: #1B5E3B;
+    --accent-light: #E8F5EE;
+    --accent-mid: #2D7A52;
+    --warn: #7A3B00;
+    --warn-bg: #FFF4E6;
+    --danger: #7A1F1F;
+    --danger-bg: #FFF0F0;
+    --border: #E2E1DC;
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-logo {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    color: var(--accent);
+    text-decoration: none;
+    letter-spacing: -0.3px;
+  }
+  .nav-tag {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--ink-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* HERO */
+  .hero {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 4rem 2rem 2rem;
+    text-align: center;
+  }
+  .hero-eyebrow {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 4px 12px;
+    border-radius: 99px;
+    margin-bottom: 1.25rem;
+  }
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+    margin-bottom: 1rem;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .hero p {
+    font-size: 16px;
+    color: var(--ink-muted);
+    max-width: 520px;
+    margin: 0 auto 2rem;
+    line-height: 1.7;
+  }
+
+  /* USER STORY STRIP */
+  .user-strip {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 2rem;
+    text-align: center;
+    font-size: 13px;
+    color: var(--ink-muted);
+  }
+  .user-strip strong { color: var(--ink); }
+
+  /* MAIN TOOL */
+  .tool-wrap {
+    max-width: 720px;
+    margin: 2.5rem auto;
+    padding: 0 2rem;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .card-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  textarea {
+    width: 100%;
+    min-height: 180px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: var(--ink);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    resize: vertical;
+    line-height: 1.6;
+    transition: border-color 0.15s;
+    outline: none;
+  }
+  textarea:focus { border-color: var(--accent); }
+  textarea::placeholder { color: var(--ink-faint); }
+
+  .btn-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 10px 22px;
+    border-radius: var(--radius-sm);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+  }
+  .btn-primary:hover { background: var(--accent-mid); }
+  .btn-primary:active { transform: scale(0.98); }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--ink-muted);
+    border: 1px solid var(--border);
+    padding: 10px 18px;
+    border-radius: var(--radius-sm);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* LOADING */
+  .loading {
+    display: none;
+    text-align: center;
+    padding: 2.5rem;
+    color: var(--ink-muted);
+    font-size: 14px;
+  }
+  .spinner {
+    width: 28px; height: 28px;
+    border: 2px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 1rem;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* RESULTS */
+  #results { display: none; }
+
+  .urgency-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 99px;
+  }
+  .urgency-HIGH { background: var(--danger-bg); color: var(--danger); }
+  .urgency-MEDIUM { background: var(--warn-bg); color: var(--warn); }
+  .urgency-LOW { background: var(--accent-light); color: var(--accent); }
+
+  .result-section {
+    margin-bottom: 1rem;
+  }
+  .result-section:last-child { margin-bottom: 0; }
+
+  .result-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .summary-text {
+    font-size: 16px;
+    color: var(--ink);
+    line-height: 1.7;
+  }
+
+  .deadline-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--danger-bg);
+    border: 1px solid #F7C1C1;
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    font-size: 14px;
+    color: var(--danger);
+    font-weight: 500;
+  }
+
+  .checklist { list-style: none; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+    color: var(--ink);
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .check-num {
+    min-width: 24px; height: 24px;
+    border-radius: 50%;
+    background: var(--accent-light);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .contact-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: var(--bg);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    font-size: 14px;
+    color: var(--ink);
+  }
+  .contact-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .reassurance-box {
+    background: var(--accent-light);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    font-size: 14px;
+    color: var(--accent);
+    line-height: 1.6;
+    font-weight: 500;
+  }
+
+  /* DISCLAIMER */
+  .disclaimer {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 12px 16px;
+    font-size: 12px;
+    color: var(--ink-muted);
+    line-height: 1.6;
+    margin-top: 0.5rem;
+  }
+
+  /* HOW IT WORKS */
+  .how-section {
+    max-width: 720px;
+    margin: 1rem auto 4rem;
+    padding: 0 2rem;
+  }
+  .how-title {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+  }
+  .step {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+  }
+  .step-num {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .step h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 0.4rem;
+  }
+  .step p {
+    font-size: 13px;
+    color: var(--ink-muted);
+    line-height: 1.5;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 1.5rem 2rem;
+    text-align: center;
+    font-size: 12px;
+    color: var(--ink-faint);
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">ClearPath</a>
+  <span class="nav-tag">USAII Global AI Hackathon 2026</span>
+</nav>
+
+<div class="hero">
+  <span class="hero-eyebrow">AI for Good</span>
+  <h1>Government letters,<br><em>finally clear.</em></h1>
+  <p>ClearPath reads confusing housing notices and turns them into plain language, a checklist, and clear next steps — built for immigrants and newcomers navigating an unfamiliar system.</p>
+</div>
+
+<div class="user-strip">
+  Built for <strong>Maria</strong> — a recent immigrant who received a housing benefit review notice she couldn't understand, with a 14-day deadline she nearly missed.
+</div>
+
+<div style="max-width:720px;margin:2.5rem auto 0;padding:0 2rem;">
+  <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:2rem 2rem 2rem;border-left:4px solid var(--accent);">
+    <p style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;">Why we built ClearPath</p>
+    <p style="font-size:17px;color:var(--ink);line-height:1.8;margin-bottom:1rem;">Imagine receiving an official government letter about your home — and not understanding a single word of it. No one to call. No time to wait. A deadline you didn't even know existed.</p>
+    <p style="font-size:17px;color:var(--ink);line-height:1.8;margin-bottom:1rem;">This is the everyday reality for millions of immigrants and newcomers around the world. They are not lacking intelligence or willpower — they are lacking access. Access to clear information, in a language they understand, at the moment they need it most.</p>
+    <p style="font-size:17px;color:var(--ink);line-height:1.8;margin-bottom:1rem;">Government housing systems are built on paperwork. But that paperwork is written in complex legal English, filled with jargon, and assumes the reader already knows how the system works. For someone new to a country, it might as well be a foreign language — even if it's technically in English.</p>
+    <p style="font-size:17px;color:var(--ink);line-height:1.8;margin-bottom:1.5rem;">We built ClearPath because we believe that <strong>no family should lose their home simply because they couldn't understand a letter.</strong> AI should not just be a tool for the privileged — it should be a bridge for those who need it most.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-top:1.25rem;">
+      <div style="background:var(--accent-light);border-radius:var(--radius-sm);padding:1rem;">
+        <p style="font-size:13px;font-weight:600;color:var(--accent);margin-bottom:4px;">Our goal</p>
+        <p style="font-size:13px;color:var(--ink);line-height:1.5;">Turn confusion into clarity — so families can act, not panic.</p>
+      </div>
+      <div style="background:var(--accent-light);border-radius:var(--radius-sm);padding:1rem;">
+        <p style="font-size:13px;font-weight:600;color:var(--accent);margin-bottom:4px;">Our belief</p>
+        <p style="font-size:13px;color:var(--ink);line-height:1.5;">Access to clear information is a basic right, not a privilege.</p>
+      </div>
+      <div style="background:var(--accent-light);border-radius:var(--radius-sm);padding:1rem;">
+        <p style="font-size:13px;font-weight:600;color:var(--accent);margin-bottom:4px;">Our promise</p>
+        <p style="font-size:13px;color:var(--ink);line-height:1.5;">Plain language, real next steps — no legal jargon, ever.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="tool-wrap">
+
+  <div class="card">
+    <div class="card-label">📄 Paste your housing letter</div>
+    <textarea id="letterInput" placeholder="Paste your government housing letter here...
+
+Example: 'Notice of Rent Subsidy Review — You are required to attend a mandatory eligibility reassessment. Failure to comply within 14 days may result in termination of your housing assistance...'"></textarea>
+    <div class="btn-row">
+      <button class="btn-primary" onclick="translateLetter()" id="translateBtn">Translate this letter →</button>
+      <button class="btn-secondary" onclick="loadSample()">Try a sample letter</button>
+    </div>
+  </div>
+
+  <div class="loading" id="loadingBox">
+    <div class="spinner"></div>
+    Reading your letter and preparing plain-language guidance...
+  </div>
+
+  <div id="results">
+    <div class="card">
+      <div class="result-section">
+        <div class="result-title">Urgency level</div>
+        <div id="urgencyBadge" class="urgency-badge"></div>
+        <p id="urgencyReason" style="font-size:14px;color:var(--ink-muted);margin-top:8px;"></p>
+      </div>
+
+      <hr style="border:none;border-top:1px solid var(--border);margin:1rem 0;">
+
+      <div class="result-section">
+        <div class="result-title">What this letter is saying</div>
+        <p class="summary-text" id="summaryText"></p>
+      </div>
+
+      <div id="deadlineWrap" style="margin-top:1rem;">
+        <div class="deadline-box">
+          <span>⏰</span>
+          <div>
+            <div style="font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:2px;">Key deadline</div>
+            <span id="deadlineText"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="result-title">Your action checklist</div>
+      <ul class="checklist" id="checklistEl"></ul>
+    </div>
+
+    <div class="card">
+      <div class="result-title">Who can help you</div>
+      <div class="contact-box">
+        <span class="contact-icon">📞</span>
+        <p id="contactText"></p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="reassurance-box" id="reassuranceText"></div>
+    </div>
+
+    <div class="disclaimer">
+      ⚠️ <strong>Responsible AI notice:</strong> ClearPath explains letters in plain language but does not make legal decisions. Always confirm important actions with a housing advisor or legal aid service before responding to official notices. This tool is for guidance only.
+    </div>
+  </div>
+</div>
+
+<div class="how-section">
+  <h2 class="how-title">The problem we're solving</h2>
+
+  <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:1.75rem;margin-bottom:1.25rem;">
+    <p style="font-size:16px;color:var(--ink);line-height:1.8;margin-bottom:1rem;">Every year, thousands of immigrant families receive government housing letters they cannot fully understand. The language is legal, the deadlines are tight, and the consequences of missing them can be severe — including losing housing assistance entirely.</p>
+    <p style="font-size:16px;color:var(--ink);line-height:1.8;">These families are not struggling because they don't care. They're struggling because the system was never designed with them in mind.</p>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:1.25rem;">
+    <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;">
+      <div style="font-family:'Fraunces',serif;font-size:2rem;font-weight:700;color:var(--accent);margin-bottom:0.4rem;">1 in 5</div>
+      <p style="font-size:13px;color:var(--ink-muted);line-height:1.5;">U.S. residents speak a language other than English at home, yet most government letters arrive in English only.</p>
+    </div>
+    <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;">
+      <div style="font-family:'Fraunces',serif;font-size:2rem;font-weight:700;color:var(--accent);margin-bottom:0.4rem;">14 days</div>
+      <p style="font-size:13px;color:var(--ink-muted);line-height:1.5;">The typical response window on a housing notice — barely enough time to find help, let alone act on it.</p>
+    </div>
+    <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;">
+      <div style="font-family:'Fraunces',serif;font-size:2rem;font-weight:700;color:var(--accent);margin-bottom:0.4rem;">Grade 16</div>
+      <p style="font-size:13px;color:var(--ink-muted);line-height:1.5;">The average reading level of U.S. government documents — equivalent to a college senior. Most are written for lawyers, not families.</p>
+    </div>
+  </div>
+
+  <div style="background:var(--accent-light);border-radius:var(--radius);padding:1.5rem 1.75rem;margin-bottom:2.5rem;border-left:3px solid var(--accent);">
+    <p style="font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);margin-bottom:0.75rem;">Who we built this for</p>
+    <div style="display:flex;flex-direction:column;gap:0.75rem;">
+      <div style="display:flex;gap:10px;align-items:flex-start;">
+        <span style="font-size:18px;flex-shrink:0;">👩</span>
+        <p style="font-size:14px;color:var(--ink);line-height:1.6;"><strong>Maria, 38</strong> — arrived from Guatemala two years ago. Received a Housing Choice Voucher review notice with a 14-day deadline. She almost missed it because she didn't know what "eligibility reassessment" meant.</p>
+      </div>
+      <div style="display:flex;gap:10px;align-items:flex-start;">
+        <span style="font-size:18px;flex-shrink:0;">👨</span>
+        <p style="font-size:14px;color:var(--ink);line-height:1.6;"><strong>Ahmed, 52</strong> — recently resettled refugee. Received a letter about his rental subsidy. He thought it was junk mail. It wasn't.</p>
+      </div>
+      <div style="display:flex;gap:10px;align-items:flex-start;">
+        <span style="font-size:18px;flex-shrink:0;">👩‍👧</span>
+        <p style="font-size:14px;color:var(--ink);line-height:1.6;"><strong>Lin, 44</strong> — immigrant caregiver raising two kids. Works two jobs and has no time to visit a housing office. Needs answers fast, on her phone, in plain English.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="how-section">
+  <h2 class="how-title">How ClearPath works</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h3>You paste the letter</h3>
+      <p>Any government housing notice, in whatever language it arrived.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h3>AI reads it</h3>
+      <p>Claude extracts what matters — deadlines, requirements, urgency.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3>You get clarity</h3>
+      <p>Plain-English summary, urgency level, checklist, and next steps.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <h3>You take action</h3>
+      <p>Confirm with a housing advisor, then respond with confidence.</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  ClearPath — Built for USAII Global AI Hackathon 2026 &nbsp;·&nbsp; Challenge 1: Help is Hard to Find &nbsp;·&nbsp; High School Track
+</footer>
+
+<script>
+function loadSample() {
+  document.getElementById('letterInput').value = `NOTICE OF RENT SUBSIDY ELIGIBILITY REVIEW
+
+Department of Housing and Community Development
+Case Number: HCV-2026-04821
+
+Dear Tenant,
+
+Your Housing Choice Voucher assistance is subject to an annual eligibility reassessment. You are hereby required to submit the following documentation within 14 calendar days of the date of this notice:
+
+1. Proof of current household income (pay stubs, employer letter, or benefit statements)
+2. Updated household composition form (Form HUD-50058)
+3. Valid government-issued photo identification for all adult household members
+4. Most recent bank statements (last 3 months)
+
+Failure to provide the required documentation by the deadline may result in suspension or termination of your housing assistance benefit. If you believe you have received this notice in error, you have the right to request an informal hearing within 10 business days.
+
+For assistance, contact our office at (555) 392-1100, Monday–Friday, 9am–4pm. Translation services are available upon request.
+
+Sincerely,
+Office of Housing Assistance Programs`;
+}
+
+async function translateLetter() {
+  const letter = document.getElementById('letterInput').value.trim();
+  if (!letter) {
+    alert('Please paste a housing letter first, or click "Try a sample letter".');
+    return;
+  }
+
+  document.getElementById('translateBtn').disabled = true;
+  document.getElementById('translateBtn').textContent = 'Reading letter...';
+  document.getElementById('loadingBox').style.display = 'block';
+  document.getElementById('results').style.display = 'none';
+
+  const systemPrompt = `You are ClearPath, an AI assistant that helps recent immigrants understand confusing government housing letters.
+
+Respond ONLY with a valid JSON object (no markdown, no backticks, no extra text) with this exact structure:
+{
+  "summary": "2-3 sentence plain English explanation of what this letter is about",
+  "urgency": "HIGH" or "MEDIUM" or "LOW",
+  "urgency_reason": "One sentence explaining the deadline or urgency",
+  "checklist": ["action item 1", "action item 2", "action item 3"],
+  "key_deadline": "Specific deadline if mentioned, or null",
+  "who_to_contact": "Who to call or visit for help, with any phone numbers mentioned",
+  "reassurance": "One warm encouraging sentence for someone who might be scared about this letter"
+}`;
+
+  try {
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-6",
+        max_tokens: 1000,
+        system: systemPrompt,
+        messages: [{ role: "user", content: `Analyze this housing letter and respond with JSON only:\n\n${letter}` }]
+      })
+    });
+
+    const data = await response.json();
+    const text = data.content.map(i => i.text || '').join('');
+    const clean = text.replace(/```json|```/g, '').trim();
+    const parsed = JSON.parse(clean);
+    showResult(parsed);
+  } catch (err) {
+    document.getElementById('loadingBox').style.display = 'none';
+    alert('Something went wrong. Please try again.');
+  } finally {
+    document.getElementById('translateBtn').disabled = false;
+    document.getElementById('translateBtn').textContent = 'Translate this letter →';
+  }
+}
+
+function showResult(r) {
+  document.getElementById('loadingBox').style.display = 'none';
+
+  const badge = document.getElementById('urgencyBadge');
+  badge.className = `urgency-badge urgency-${r.urgency}`;
+  const icons = { HIGH: '🔴', MEDIUM: '🟡', LOW: '🟢' };
+  badge.textContent = `${icons[r.urgency] || ''} ${r.urgency} priority`;
+
+  document.getElementById('urgencyReason').textContent = r.urgency_reason || '';
+  document.getElementById('summaryText').textContent = r.summary || '';
+
+  if (r.key_deadline) {
+    document.getElementById('deadlineWrap').style.display = 'block';
+    document.getElementById('deadlineText').textContent = r.key_deadline;
+  } else {
+    document.getElementById('deadlineWrap').style.display = 'none';
+  }
+
+  const cl = document.getElementById('checklistEl');
+  cl.innerHTML = (r.checklist || []).map((item, i) =>
+    `<li><span class="check-num">${i + 1}</span><span>${item}</span></li>`
+  ).join('');
+
+  document.getElementById('contactText').textContent = r.who_to_contact || 'Contact your local housing authority for guidance.';
+  document.getElementById('reassuranceText').textContent = r.reassurance || '';
+
+  document.getElementById('results').style.display = 'block';
+  document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+</script>
+
+</body>
+</html>
