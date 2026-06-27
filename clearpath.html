@@ -614,18 +614,18 @@ Respond ONLY with a valid JSON object (no markdown, no backticks, no extra text)
   try {
     const response = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
-       headers: {
-  "Content-Type": "application/json",
-  "x-api-key": "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",
-  "anthropic-version": "2023-06-01",
-  "anthropic-dangerous-direct-browser-access": "true"
-},
-body: JSON.stringify({
-  model: "claude-sonnet-4-6",
-  max_tokens: 1000,
-  system: systemPrompt,
-  messages: [{ role: "user", content: `Analyze this housing letter and respond with JSON only:\n\n${letter}` }]
-})
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": "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",
+        "anthropic-version": "2023-06-01",
+        "anthropic-dangerous-direct-browser-access": "true"
+      },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-6",
+        max_tokens: 1000,
+        system: systemPrompt,
+        messages: [{ role: "user", content: `Analyze this housing letter and respond with JSON only:\n\n${letter}` }]
+      })
     });
 
     const data = await response.json();
